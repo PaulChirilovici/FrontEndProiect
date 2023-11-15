@@ -30,6 +30,7 @@
             ],
             "scripts": []
           },
+          "proxyConfig": "src/proxy.conf.json",
           "configurations": {
             "production": {
               "budgets": [
