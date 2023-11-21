@@ -14,11 +14,19 @@ import {MatCardModule} from "@angular/material/card";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { MainpageComponent } from './components/mainpage/mainpage.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatDialogModule} from "@angular/material/dialog";
+import { EmployeeFormComponent } from './components/employee-form/employee-form.component';
+import {MatRadioButton, MatRadioModule} from "@angular/material/radio";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    MainpageComponent,
+    EmployeeFormComponent
   ],
   imports: [
     BrowserModule,
@@ -33,9 +41,15 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     MatToolbarModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatDialogModule,
+    MatRadioModule,
+    MatSelectModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }

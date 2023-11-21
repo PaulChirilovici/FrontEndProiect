@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import {AuthService} from "../../services/auth.service";
 })
 export class LoginComponent implements OnInit{
   formGroup!: FormGroup;
-  constructor(private authService:AuthService) {
+  constructor(private authService:AuthService,private router:Router) {
   }
   ngOnInit(){
     this.initForm();
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit{
     if(this.formGroup.valid)
     {
       this.authService.login(this.formGroup.value).subscribe(response=>{
-        console.log(response);
+        this.router.navigate(['/mainpage']);
       },error => {
         alert("Incorrect user or password!");
       })

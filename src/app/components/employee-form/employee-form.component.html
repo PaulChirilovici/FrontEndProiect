@@ -1,0 +1,44 @@
+<div mat-dialog-title>
+  <h1>Employee Form</h1>
+</div>
+<form [formGroup]="empForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Full Name</mat-label>
+        <input matInput type="text" placeholder="Ex. Technical" formControlName="fullname">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" placeholder="Ex. test@gmail.com" formControlName="email">
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-radio-group aria-label="Select an option" formControlName="role">
+        <mat-label><b>Role</b></mat-label>
+        <mat-radio-button value="employee">Employee</mat-radio-button>
+        <mat-radio-button value="manager">Manager</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="fill">
+        <mat-label>Department</mat-label>
+        <mat-select formControlName="department">
+          <mat-option *ngFor="let val of departments" [value]="val">{{val}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Manager</mat-label>
+        <mat-select formControlName="manager">
+          <mat-option *ngFor="let val of managers" [value]="val"> {{val}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="action">
+      <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Save</button>
+    </div>
+
+  </div>
+</form>
