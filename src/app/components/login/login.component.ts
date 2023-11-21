@@ -26,6 +26,8 @@ export class LoginComponent implements OnInit{
     if(this.formGroup.valid)
     {
       this.authService.login(this.formGroup.value).subscribe(response=>{
+        console.log(response.token);
+        localStorage.setItem("token",response.token);
         this.router.navigate(['/mainpage']);
       },error => {
         alert("Incorrect user or password!");

@@ -25,7 +25,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Department</mat-label>
         <mat-select formControlName="department">
-          <mat-option *ngFor="let val of departments" [value]="val">{{val}}</mat-option>
+          <mat-option *ngFor="let val of departments" [value]="val">{{val.description}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill">
