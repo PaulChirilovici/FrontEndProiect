@@ -21,11 +21,11 @@ export class EmployeeFormComponent implements OnInit{
   constructor(private fb:FormBuilder, private employeeService:EmployeeService,private deparmentService:DepartmentService,private dialogRef:MatDialogRef<EmployeeFormComponent>,
               @Inject(MAT_DIALOG_DATA) public data:any) {
     this.empForm=this.fb.group({
-      fullname:'',
+      name:'',
       email:'',
       role:'',
-      department:'',
-      manager:''
+      departmentId:'',
+      managerId:''
     })
   }
   onFormSubmit(){
@@ -33,7 +33,7 @@ export class EmployeeFormComponent implements OnInit{
       if(this.data)
       {//update
         console.log(this.empForm.value);
-        this.employeeService.addEmployee(this.empForm.value).subscribe(response=>{
+        this.employeeService.updateEmployee(this.data.id,this.empForm.value).subscribe(response=>{
           this.dialogRef.close(true);
           alert("Successfully updated employee!");
         },error => {
@@ -78,11 +78,11 @@ export class EmployeeFormComponent implements OnInit{
     this.deparmentService.getDepartments().subscribe((response:DepartmentResponse[])=>{
       this.departments=response;
       console.log(this.departments)
+      console.log(this.data.departmentId);
     },error => {
 
     })
     this.empForm.patchValue(this.data);
-
   }
 
 

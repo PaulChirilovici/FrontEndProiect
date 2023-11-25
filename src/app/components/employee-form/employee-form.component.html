@@ -6,7 +6,7 @@
     <div class="row">
       <mat-form-field appearance="outline">
         <mat-label>Full Name</mat-label>
-        <input matInput type="text" placeholder="Ex. Technical" formControlName="fullname">
+        <input matInput type="text" placeholder="Ex. Pompiliu" formControlName="name">
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
@@ -24,13 +24,13 @@
     <div class="row">
       <mat-form-field appearance="fill">
         <mat-label>Department</mat-label>
-        <mat-select formControlName="department" (valueChange)="onDepartmentChange($event)">
+        <mat-select formControlName="departmentId" (valueChange)="onDepartmentChange($event)">
           <mat-option *ngFor="let val of departments" [value]="val">{{val.description}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Manager</mat-label>
-        <mat-select formControlName="manager">
+        <mat-select formControlName="managerId">
           <mat-option *ngFor="let val of managers" [value]="val"> {{val.name}}</mat-option>
         </mat-select>
       </mat-form-field>
