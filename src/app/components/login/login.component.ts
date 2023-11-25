@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit{
       this.authService.login(this.formGroup.value).subscribe(response=>{
         console.log(response.token);
         localStorage.setItem("token",response.token);
+        localStorage.setItem("email",this.formGroup.controls["email"].value);
         this.router.navigate(['/mainpage']);
       },error => {
         alert("Incorrect user or password!");

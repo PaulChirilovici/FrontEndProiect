@@ -20,7 +20,7 @@ export class AuthService {
     console.log(JSON.stringify(data));
     return this.http.post(this.loginUrl, JSON.stringify(data), options);
   }
-  register(data: { email: string, password: string }): Observable<any>{
+  register(data: { email: string}): Observable<any>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',  // Add your server's origin here or use * for any origin
@@ -34,5 +34,22 @@ export class AuthService {
 
     console.log(object);
     return this.http.post(this.registerUrl, object, options);
+  }
+  changePassword(data: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',  // Add your server's origin here or use * for any origin
+      'Authorization': 'Bearer ' + localStorage.getItem("token"),
+    });
+
+    const options = {headers: headers};
+
+    var object = {
+      "email": localStorage.getItem("email"),
+      "newPassword":data.newPassword
+    }
+
+    console.log(object);
+    return this.http.post("http://localhost:8080/employee/rpassword", object, options);
   }
 }

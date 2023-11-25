@@ -20,13 +20,18 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { EmployeeFormComponent } from './components/employee-form/employee-form.component';
 import {MatRadioButton, MatRadioModule} from "@angular/material/radio";
 import {MatSelectModule} from "@angular/material/select";
+import { DepartmentFormComponent } from './components/department-form/department-form.component';
+import { ChangePasswordFormComponent } from './components/change-password-form/change-password-form.component';
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MainpageComponent,
-    EmployeeFormComponent
+    EmployeeFormComponent,
+    DepartmentFormComponent,
+    ChangePasswordFormComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +51,8 @@ import {MatSelectModule} from "@angular/material/select";
     MatIconModule,
     MatDialogModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent],

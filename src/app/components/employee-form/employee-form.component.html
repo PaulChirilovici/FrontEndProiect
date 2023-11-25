@@ -14,30 +14,30 @@
       </mat-form-field>
     </div>
     <div class="row">
-      <mat-radio-group aria-label="Select an option" formControlName="role">
+      <mat-radio-group aria-label="Select an option" formControlName="role" (change)="onManagerChange($event)">
         <mat-label><b>Role</b></mat-label>
-        <mat-radio-button value="employee">Employee</mat-radio-button>
-        <mat-radio-button value="manager">Manager</mat-radio-button>
+        <mat-radio-button value="Employee">Employee</mat-radio-button>
+        <mat-radio-button value="Manager">Manager</mat-radio-button>
       </mat-radio-group>
     </div>
 
     <div class="row">
       <mat-form-field appearance="fill">
         <mat-label>Department</mat-label>
-        <mat-select formControlName="department">
+        <mat-select formControlName="department" (valueChange)="onDepartmentChange($event)">
           <mat-option *ngFor="let val of departments" [value]="val">{{val.description}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Manager</mat-label>
         <mat-select formControlName="manager">
-          <mat-option *ngFor="let val of managers" [value]="val"> {{val}}</mat-option>
+          <mat-option *ngFor="let val of managers" [value]="val"> {{val.name}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
     <div mat-dialog-actions class="action">
       <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
-      <button mat-raised-button color="primary" type="submit">Save</button>
+      <button mat-raised-button color="primary" type="submit">{{data ? "Update":"Save"}}</button>
     </div>
 
   </div>

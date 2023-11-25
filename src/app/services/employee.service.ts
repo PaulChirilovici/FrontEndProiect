@@ -17,11 +17,31 @@ export class EmployeeService {
     });
 
     const options = { headers: headers };
-    console.log(JSON.stringify(data));
-    return this.http.post("http://localhost:8080/employee", JSON.stringify(data), options);
+    if(data.role=="Employee")
+    var object={
+      "name": data.fullname,
+      "email": data.email,
+      "managerId": data.manager.id,
+      "departmentId": data.department.id,
+      "role": data.role
+    }
+    else
+    {
+      object={
+        "name": data.fullname,
+        "email": data.email,
+        "managerId": null,
+        "departmentId": data.department.id,
+        "role": data.role
+      }
+    }
+    console.log(object);
+    return this.http.post("http://localhost:8080/employee", object, options);
   }
 
-  getDepartments(): Observable<any>{
+
+
+    getManagers(selectedIndex: number): Observable<any>{
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',  // Add your server's origin here or use * for any origin
@@ -30,7 +50,24 @@ export class EmployeeService {
 
     const options = { headers: headers };
     console.log(options.headers.get('Authorization'));
-    return this.http.get("http://localhost:8080/departments",{headers:
+    return this.http.get("http://localhost:8080/manager/department/"+selectedIndex,{headers:
+        new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',  // Add your server's origin here or use * for any origin
+          'Authorization': 'Bearer '+localStorage.getItem("token")!.toString()
+        })});
+  }
+
+  getEmployees(): Observable<any>{
+    return this.http.get("http://localhost:8080/employee",{headers:
+        new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',  // Add your server's origin here or use * for any origin
+          'Authorization': 'Bearer '+localStorage.getItem("token")!.toString()
+        })});
+  }
+  deleteEmployee(id:any): Observable<any>{
+    return this.http.delete("http://localhost:8080/employee/"+id,{headers:
         new HttpHeaders({
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',  // Add your server's origin here or use * for any origin

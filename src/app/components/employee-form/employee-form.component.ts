@@ -1,8 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {EmployeeService} from "../../services/employee.service";
 import {AuthService} from "../../services/auth.service";
-import {DepartmentResponse} from "../../models/dto";
+import {DepartmentResponse, ManagerResponse} from "../../models/dto";
+import {HttpStatusCode} from "@angular/common/http";
+import {DepartmentService} from "../../services/department.service";
+import {DialogRef} from "@angular/cdk/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 
 @Component({
@@ -13,12 +17,9 @@ import {DepartmentResponse} from "../../models/dto";
 export class EmployeeFormComponent implements OnInit{
   empForm:FormGroup;
   departments: DepartmentResponse[]=[];
-  managers: string[]=[
-    'Vlad',
-    'Paul',
-    'Pompiliu'
-  ];
-  constructor(private fb:FormBuilder, private employeeService:EmployeeService,private authService:AuthService) {
+  managers: ManagerResponse[]=[];
+  constructor(private fb:FormBuilder, private employeeService:EmployeeService,private deparmentService:DepartmentService,private dialogRef:MatDialogRef<EmployeeFormComponent>,
+              @Inject(MAT_DIALOG_DATA) public data:any) {
     this.empForm=this.fb.group({
       fullname:'',
       email:'',
@@ -29,23 +30,60 @@ export class EmployeeFormComponent implements OnInit{
   }
   onFormSubmit(){
     if(this.empForm.valid){
-      console.log(this.empForm.controls['email'].value);
-      this.authService.register(this.empForm.value).subscribe(response=>{
+      if(this.data)
+      {//update
+        console.log(this.empForm.value);
+        this.employeeService.addEmployee(this.empForm.value).subscribe(response=>{
+          this.dialogRef.close(true);
+          alert("Successfully updated employee!");
+        },error => {
+          console.log("EMPPLOYEE ")
+          console.log(error);
+        })
 
-      },error => {
-
-      })
+      }else {
+        console.log(this.empForm.value);
+        this.employeeService.addEmployee(this.empForm.value).subscribe(response=>{
+          console.log("S-A ADAUGAT EMPLOYEE");
+          this.dialogRef.close(true);
+          alert("Successfully added employee!");
+        },error => {
+          console.log("EMPPLOYEE ")
+          console.log(error);
+        })
+      }
     }
+  }
+  onDepartmentChange(selectedDepartment: any) {
+    const selectedIndex = selectedDepartment.id;
+    console.log(selectedIndex);
+    this.employeeService.getManagers(selectedIndex).subscribe((response:ManagerResponse[])=>{
+      this.managers=response;
+      console.log(this.departments)
+    },error => {
+
+    })
+  }
+
+  onManagerChange(selectedManager: any){
+    console.log(selectedManager.value);
+    if(selectedManager.value=="Manager") {
+      this.empForm.controls["manager"].disable();
+    }
+    else
+      this.empForm.controls["manager"].enable();
   }
 
   ngOnInit(): void {
-    this.employeeService.getDepartments().subscribe((response:DepartmentResponse[])=>{
+    this.deparmentService.getDepartments().subscribe((response:DepartmentResponse[])=>{
       this.departments=response;
       console.log(this.departments)
     },error => {
 
     })
+    this.empForm.patchValue(this.data);
 
   }
+
 
 }
