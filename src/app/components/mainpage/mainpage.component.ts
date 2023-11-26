@@ -6,6 +6,8 @@ import {ChangePasswordFormComponent} from "../change-password-form/change-passwo
 import {EmployeeService} from "../../services/employee.service";
 import {MatTableDataSource} from '@angular/material/table';
 import {DataSource} from "@angular/cdk/collections";
+import {DepartmentService} from "../../services/department.service";
+import {Router} from "@angular/router";
 
 ;
 
@@ -16,9 +18,10 @@ import {DataSource} from "@angular/cdk/collections";
 })
 export class MainpageComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'name', 'email', 'managerId', 'departmentId', 'role', 'action'];
-  dataSource: DataSource<any>
-
-  constructor(private dialog: MatDialog, private employeeService: EmployeeService) {
+  dataSource: DataSource<any>;
+  dataSourceDep: DataSource<any>;
+  displayedColumnsDep: string[] = ['id', 'description', 'action'];
+  constructor(private dialog: MatDialog, private employeeService: EmployeeService,private departmentServie:DepartmentService,private router:Router) {
   }
 
   openAddEmployeeForm() {
@@ -30,7 +33,11 @@ export class MainpageComponent implements OnInit, AfterViewInit {
   }
 
   openAddDepartmentForm() {
-    this.dialog.open(DepartmentFormComponent);
+    const dialogRef=this.dialog.open(DepartmentFormComponent);
+    dialogRef.afterClosed().subscribe(value => {
+      if (value)
+        this.getDepartmentList();
+    });
   }
 
   openAddChangePasswordForm() {
@@ -47,9 +54,17 @@ export class MainpageComponent implements OnInit, AfterViewInit {
       }
     })
   }
+  getDepartmentList()
+  {
+    this.departmentServie.getDepartments().subscribe(res=>{
+      console.log(res);
+      this.dataSourceDep=new MatTableDataSource(res)
+    });
+  }
 
   ngOnInit(): void {
     this.getEmployeeList();
+    this.getDepartmentList();
   }
 
   ngAfterViewInit(): void {
@@ -71,6 +86,31 @@ export class MainpageComponent implements OnInit, AfterViewInit {
       alert("Employee deleted!")
       this.getEmployeeList();
     });
+  }
+
+  openEditFormDep(data) {
+    const dialogRef=this.dialog.open(DepartmentFormComponent, {
+      data,
+    })
+    dialogRef.afterClosed().subscribe(value => {
+      if (value)
+        this.getDepartmentList();
+    });
+  }
+
+  deleteDepartment(id) {
+    this.departmentServie.deleteDepartment(id).subscribe(response => {
+      alert("Department deleted!")
+      this.getDepartmentList();
+    },error => {
+      alert("Department deleted!")
+      this.getDepartmentList();
+    });
+  }
+
+  logout() {
+    localStorage.removeItem("token");
+    this.router.navigate(['/']);
   }
 }
 

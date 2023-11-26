@@ -39,10 +39,37 @@ export class DepartmentService {
     const options = {headers: headers};
 
     var object = {
-      "description": data.departmentName,
+      "description": data.description,
     }
 
     console.log(object);
     return this.http.post("http://localhost:8080/departments", object, options);
+  }
+  updateDepartment(id:number,data: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',  // Add your server's origin here or use * for any origin
+      'Authorization': 'Bearer ' + localStorage.getItem("token"),
+    });
+
+    const options = {headers: headers};
+
+    var object = {
+      "description": data.description,
+    }
+
+    console.log(object);
+    return this.http.put("http://localhost:8080/departments/"+id, object, options);
+  }
+
+  deleteDepartment(id:number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',  // Add your server's origin here or use * for any origin
+      'Authorization': 'Bearer ' + localStorage.getItem("token"),
+    });
+
+    const options = {headers: headers};
+    return this.http.delete("http://localhost:8080/departments/"+id, options);
   }
 }

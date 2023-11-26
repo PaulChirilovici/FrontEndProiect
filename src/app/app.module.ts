@@ -23,6 +23,7 @@ import {MatSelectModule} from "@angular/material/select";
 import { DepartmentFormComponent } from './components/department-form/department-form.component';
 import { ChangePasswordFormComponent } from './components/change-password-form/change-password-form.component';
 import {MatTableModule} from "@angular/material/table";
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import {MatTableModule} from "@angular/material/table";
     MatDialogModule,
     MatRadioModule,
     MatSelectModule,
-    MatTableModule
+    MatTableModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent],

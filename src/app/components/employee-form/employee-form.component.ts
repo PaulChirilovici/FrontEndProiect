@@ -38,6 +38,7 @@ export class EmployeeFormComponent implements OnInit{
           alert("Successfully updated employee!");
         },error => {
           console.log("EMPPLOYEE ")
+          alert("Cannot change email.")
           console.log(error);
         })
 
@@ -48,6 +49,7 @@ export class EmployeeFormComponent implements OnInit{
           this.dialogRef.close(true);
           alert("Successfully added employee!");
         },error => {
+
           console.log("EMPPLOYEE ")
           console.log(error);
         })
