@@ -24,6 +24,7 @@ import { DepartmentFormComponent } from './components/department-form/department
 import { ChangePasswordFormComponent } from './components/change-password-form/change-password-form.component';
 import {MatTableModule} from "@angular/material/table";
 import {MatMenuModule} from "@angular/material/menu";
+import {JWT_OPTIONS, JwtHelperService, JwtModule} from "@auth0/angular-jwt";
 
 @NgModule({
   declarations: [
@@ -54,9 +55,11 @@ import {MatMenuModule} from "@angular/material/menu";
     MatRadioModule,
     MatSelectModule,
     MatTableModule,
-    MatMenuModule
+    MatMenuModule,
+    JwtModule
   ],
-  providers: [],
+  providers: [{
+    provide:JWT_OPTIONS,useValue:JWT_OPTIONS},JwtHelperService],
   bootstrap: [AppComponent],
 
 })
