@@ -8,6 +8,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {DataSource} from "@angular/cdk/collections";
 import {DepartmentService} from "../../services/department.service";
 import {Router} from "@angular/router";
+import {ManagerResponse} from "../../models/dto";
 
 ;
 
@@ -21,6 +22,7 @@ export class MainpageComponent implements OnInit, AfterViewInit {
   dataSource: DataSource<any>;
   dataSourceDep: DataSource<any>;
   displayedColumnsDep: string[] = ['id', 'description', 'action'];
+  employees:ManagerResponse[]=[];
   constructor(private dialog: MatDialog, private employeeService: EmployeeService,private departmentServie:DepartmentService,private router:Router) {
   }
 
@@ -49,6 +51,7 @@ export class MainpageComponent implements OnInit, AfterViewInit {
       next: (res) => {
         console.log(res);
         this.dataSource = new MatTableDataSource(res);
+        this.employees=res;
       }, error: (err) => {
         console.log(err);
       }
@@ -81,7 +84,15 @@ export class MainpageComponent implements OnInit, AfterViewInit {
     });
   }
 
-  deleteEmployee(id) {
+  deleteEmployee(id,role) {
+    const isEmployeeWithManagerId = this.employees.some(
+      employee => (employee.managerId === id && employee.role==='Employee')
+    );
+    if(isEmployeeWithManagerId && role==="Manager")
+    {
+      alert("Cannot delete manager if there are employees under him, migrate employees first");
+      return;
+    }
     this.employeeService.deleteEmployee(id).subscribe(response => {
       alert("Employee deleted!")
       this.getEmployeeList();
@@ -99,12 +110,17 @@ export class MainpageComponent implements OnInit, AfterViewInit {
   }
 
   deleteDepartment(id) {
+
     this.departmentServie.deleteDepartment(id).subscribe(response => {
       alert("Department deleted!")
       this.getDepartmentList();
     },error => {
-      alert("Department deleted!")
+      if(error.error!=null)
+        alert("Department deleted!")
+      else
+        alert("Cannot delete department because there are employees in it.")
       this.getDepartmentList();
+      console.log(error);
     });
   }
 

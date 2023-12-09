@@ -27,11 +27,15 @@ export class DepartmentFormComponent implements OnInit{
           console.log(this.data)
           this.departmentService.updateDepartment(this.data.id,this.departForm.value).subscribe(res=>{
             this.dialogRef.close(true);
-
+            console.log(res);
             alert("Successfully updated department!");
           },error => {
             this.dialogRef.close(true);
-            alert("Successfully updated department!");
+            console.log(error);
+            if(error.error!=null)
+              alert("Successfully updated department!");
+            else
+              alert("Cannot add department with same name!");
           });
 
         }else{
@@ -41,7 +45,7 @@ export class DepartmentFormComponent implements OnInit{
             alert("Successfully added department!");
           },error => {
             this.dialogRef.close(true);
-            alert("Successfully added department!");
+            alert("Cannot add department with same name!");
           });
 
         }

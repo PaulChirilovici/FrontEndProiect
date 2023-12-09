@@ -75,13 +75,24 @@ export class EmployeeService {
         })});
   }
   updateEmployee(id:any,data:any): Observable<any>{
-    var object={
-      "id": id,
-      "name": data.name,
-      "email": data.email,
-      "managerId": data.managerId.id,
-      "departmentId": data.departmentId.id,
-      "role": data.role
+    if(data.managerId!=null)
+      var object={
+        "id": id,
+        "name": data.name,
+        "email": data.email,
+        "managerId": data.managerId.id,
+        "departmentId": data.departmentId.id,
+        "role": data.role
+      }
+    else {
+      object={
+        "id": id,
+        "name": data.name,
+        "email": data.email,
+        "managerId": "",
+        "departmentId": data.departmentId.id,
+        "role": data.role
+      }
     }
     console.log(object);
     return this.http.put("http://localhost:8080/employee/"+id,object,{headers:
