@@ -23,6 +23,8 @@ export class MainpageComponent implements OnInit, AfterViewInit {
   dataSourceDep: DataSource<any>;
   displayedColumnsDep: string[] = ['id', 'description', 'action'];
   employees:ManagerResponse[]=[];
+  addEmployeeAvailable: boolean = false;  // Add this variable
+  addDepartmentAvailable: boolean = false;  // Add this variable
   constructor(private dialog: MatDialog, private employeeService: EmployeeService,private departmentServie:DepartmentService,private router:Router) {
   }
 
@@ -66,8 +68,16 @@ export class MainpageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.getEmployeeList();
-    this.getDepartmentList();
+    if(localStorage.getItem("email")==="admin")
+    { this.getEmployeeList();
+      this.getDepartmentList();
+      this.addDepartmentAvailable=true;
+      this.addEmployeeAvailable=true;
+    }
+    else{
+      this.addDepartmentAvailable=false;
+      this.addEmployeeAvailable=false;
+    }
   }
 
   ngAfterViewInit(): void {

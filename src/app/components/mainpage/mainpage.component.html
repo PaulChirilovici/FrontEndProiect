@@ -9,10 +9,10 @@
     </mat-menu>
     <span>My App</span>
     <span class="example-spacer"></span>
-    <button mat-raised-button class="btn" (click)="openAddEmployeeForm()">
+    <button mat-raised-button class="btn" (click)="openAddEmployeeForm()" [disabled]="!addEmployeeAvailable">
       ADD EMPLOYEE
     </button>
-    <button mat-raised-button class="btn" (click)="openAddDepartmentForm()">
+    <button mat-raised-button class="btn" (click)="openAddDepartmentForm()" [disabled]="!addDepartmentAvailable">
       ADD DEPARTMENT
     </button>
     <button mat-raised-button class="btn" (click)="openAddChangePasswordForm()">
