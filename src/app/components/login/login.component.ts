@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit{
         console.log(response.token);
         localStorage.setItem("token",response.token);
         localStorage.setItem("email",this.formGroup.controls["email"].value);
-        this.authService.storeUserData();
         this.router.navigate(['/mainpage']);
       },error => {
         alert("Incorrect user or password!");

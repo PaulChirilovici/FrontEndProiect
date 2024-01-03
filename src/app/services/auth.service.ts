@@ -11,7 +11,7 @@ export class AuthService {
   private registerUrl = 'http://localhost:8080/auth/register';
   tokenSubscription = new Subscription()
   timeout;
-  constructor(private http:HttpClient,private router:Router, private jwtHelper: JwtHelperService) { }
+  constructor(private http:HttpClient,private router:Router) { }
 
   login(data: { email: string, password: string }): Observable<any>{
     const headers = new HttpHeaders({
@@ -55,23 +55,7 @@ export class AuthService {
     console.log(object);
     return this.http.post("http://localhost:8080/employee/rpassword", object, options);
   }
-  storeUserData() {
 
-    this.timeout = this.jwtHelper.getTokenExpirationDate(localStorage.getItem("token")).valueOf() - new Date().valueOf();
-    sessionStorage.setItem("id_token", localStorage.getItem("token"));
-
-    this.expirationCounter(this.timeout);
-  }
-
-  expirationCounter(timeout) {
-    this.tokenSubscription.unsubscribe();
-    this.tokenSubscription = of(null).pipe(delay(timeout)).subscribe((expired) => {
-      console.log('EXPIRED!!');
-
-      this.logout();
-      this.router.navigate(["/"]);
-    });
-  }
   logout() {
     this.tokenSubscription.unsubscribe();
     localStorage.removeItem("token");

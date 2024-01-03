@@ -1,4 +1,5 @@
-  <mat-toolbar color="primary">
+
+<mat-toolbar color="primary">
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
       <mat-icon>menu</mat-icon>
     </button>
@@ -9,20 +10,20 @@
     </mat-menu>
     <span>My App</span>
     <span class="example-spacer"></span>
-    <button mat-raised-button class="btn" (click)="openAddEmployeeForm()" [disabled]="!addEmployeeAvailable">
+    <button mat-raised-button class="btn" color="warn" (click)="openAddEmployeeForm()" [disabled]="!addEmployeeAvailable">
       ADD EMPLOYEE
     </button>
-    <button mat-raised-button class="btn" (click)="openAddDepartmentForm()" [disabled]="!addDepartmentAvailable">
+    <button mat-raised-button class="btn" color="warn" (click)="openAddDepartmentForm()" [disabled]="!addDepartmentAvailable">
       ADD DEPARTMENT
     </button>
-    <button mat-raised-button class="btn" (click)="openAddChangePasswordForm()">
+    <button mat-raised-button class="btn" color="warn" (click)="openAddChangePasswordForm()">
       CHANGE PASSWORD
     </button>
   </mat-toolbar>
 
   <h1>Employees</h1>
 
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 body">
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
@@ -75,7 +76,7 @@
   </table>
 
   <h1>Departments</h1>
-  <table mat-table [dataSource]="dataSourceDep">
+  <table mat-table [dataSource]="dataSourceDep" class="body">
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
